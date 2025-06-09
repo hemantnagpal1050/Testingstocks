@@ -8,6 +8,7 @@ def is_close_to_high(stock_name, days=30, threshold=0.02):
     start_date = end_date - timedelta(days=days * 2)
 
     df = yf.download(stock_name, start=start_date, end=end_date)
+    df['Close'] = pd.to_numeric(df['Close'], errors='coerce')
     df = df[['Close']].dropna()
     df = df[-days:]
 
@@ -21,6 +22,7 @@ def is_close_to_high(stock_name, days=30, threshold=0.02):
         if (recent_high - price) / recent_high > threshold:
             return False
     return True
+
 
 st.title("📊 Filter Stocks Close to Recent High")
 
