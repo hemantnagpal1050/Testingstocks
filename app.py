@@ -27,14 +27,3 @@ def analyze_stock(ticker):
 
     return alerts
 
-tickers = ['NHPC.NS', 'GAIL.NS', 'TATAPOWER.NS']  # Midcap stocks
-
-for ticker in tickers:
-    try:
-        matches = analyze_stock(ticker)
-        if matches:
-            print(f"{ticker}: Signal on {', '.join(matches)}")
-        else:
-            print(f"{ticker}: No match found")
-    except Exception as e:
-        print(f"{ticker}: Error - {e}")
