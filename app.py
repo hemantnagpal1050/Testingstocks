@@ -26,7 +26,7 @@ def check_volume_price_action(stock_df):
     except ZeroDivisionError:
         return False
 
-    is_volume_spike = float(recent_volume) >= 2 * float(avg_volume)
+   is_volume_spike = float(recent_volume.iloc[0]) >= 2 * float(avg_volume.iloc[0])
     is_price_spike = float(price_change) > 2
 
     return is_volume_spike and is_price_spike
