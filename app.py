@@ -15,12 +15,21 @@ def fetch_stock_data(stock_name, days=30):
 def check_volume_price_action(stock_df):
     if len(stock_df) < 21:
         return False
+
     recent_volume = stock_df['Volume'].iloc[-1]
     avg_volume = stock_df['Volume'].iloc[-21:-1].mean()
     recent_price = stock_df['Close'].iloc[-1]
     previous_price = stock_df['Close'].iloc[-2]
-    price_change = (recent_price - previous_price) / previous_price * 100
-    return recent_volume >= 2 * avg_volume and price_change > 2
+
+    try:
+        price_change = (recent_price - previous_price) / previous_price * 100
+    except ZeroDivisionError:
+        return False
+
+    is_volume_spike = float(recent_volume) >= 2 * float(avg_volume)
+    is_price_spike = float(price_change) > 2
+
+    return is_volume_spike and is_price_spike
 
 st.title("📈 Volume + Price Action Stock Alert")
 
